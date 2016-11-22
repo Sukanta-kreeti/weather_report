@@ -1,0 +1,18 @@
+<% if forecast.daily.present? %>
+<section>
+  <div>
+    <span>Current temperature: <%= forecast.currently.temperature %></span>
+  </div>
+  <div>
+    <span>Today's weather: </span>
+    <span>Min. temperature: <%= forecast.daily.data.first.temperatureMin %></span>
+    <span>Max. temperature: <%= forecast.daily.data.first.temperatureMax %></span>
+  </div>
+</section>
+
+<section>
+  <%= line_chart graph_content(forecast), { :width => "600px", :height => "600px" } %>
+</section>
+<% else %>
+<div>Please choose valid date range</div>
+<% end %>
