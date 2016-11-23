@@ -1,20 +1,13 @@
 class HomeController < ApplicationController
   def index
-    lan = request.location.longitude
-    lat = request.location.latitude
-    date = if params[:date]
-             DateTime.parse(params[:date])
-           else
-             Time.new(Date.today.year, Date.today.month, Date.today.day)
-           end
+    if request.xhr?
+      lan = params[:coords][:longitude]
+      lat = params[:coords][:latitude]
+      date = DateTime.parse(params[:date])
 
-    @forecast = ForecastIO.forecast(lat, lan, :time => date.to_i, params: { units: 'si', exclude: ["minutely", "alerts"] })
-
-    respond_to do |format|
-      if request.xhr?
+      @forecast = ForecastIO.forecast(lat, lan, :time => date.to_i, params: { units: 'si', exclude: ["minutely", "alerts"] })
+      respond_to do |format|
         format.js
-      else
-        format.html
       end
     end
   end

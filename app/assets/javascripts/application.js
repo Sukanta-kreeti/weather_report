@@ -17,23 +17,40 @@
 //= require_tree .
 
 $(document).ready(function(){
+  var location = null
+  getLocation();
+
   $('.datepicker').datepicker({
     dateFormat: 'yy-mm-dd',
     onSelect: function (dateText, inst) {
-      $("body").addClass("loading");
-      $.ajax({
-        type: "GET",
-        url: "/",
-        data: { date: dateText },
-        success: function(data) {
-          $("body").removeClass("loading");
-          return false;
-        },
-        error: function(data) {
-          $("body").removeClass("loading");
-          return false;
-        }
-      })
+      renderData(dateText)
     }
   })
+
+  function renderData(date) {
+    $("body").addClass("loading");
+    $.ajax({
+      type: "GET",
+      url: "/",
+      data: { date: date, coords: location.coords },
+      success: function(data) {
+        $("body").removeClass("loading");
+        return false;
+      },
+      error: function(data) {
+        $("body").removeClass("loading");
+        return false;
+      }
+    })
+  }
+
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    }
+  }
+  function showPosition(position) {
+    location = position;
+    renderData(new Date().toLocaleString());
+  }
 });

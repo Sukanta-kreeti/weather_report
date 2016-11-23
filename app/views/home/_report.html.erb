@@ -1,4 +1,4 @@
-<% if forecast.daily.present? %>
+<% if forecast && forecast.daily.present? %>
 <section>
   <div>
     <span>Current temperature: <%= forecast.currently.temperature %></span>
