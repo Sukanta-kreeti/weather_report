@@ -36,9 +36,12 @@ gem 'forecast_io'
 gem 'geocoder'
 gem 'chartjs-ror'
 gem 'jquery-ui-rails'
+gem 'bootstrap-sass'
+gem "font-awesome-rails"
+#gem 'weather-icons-rails'
+gem 'weather-icons-for-rails'
 
 group :development, :test do
-  gem 'mysql2'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   #gem 'byebug'
   gem "pry", "~> 0.9"
@@ -57,5 +60,5 @@ end
 
 group :production do
   gem 'rails_12factor'
-  gem 'pg'
+  gem 'pg', '~> 0.19.0'
 end

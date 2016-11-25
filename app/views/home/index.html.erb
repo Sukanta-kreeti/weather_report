@@ -1,5 +1,5 @@
-<div>Weather Report</div>
-<input type="text", class="datepicker" />
-<div id="report">
-  <%= render partial: "report", locals: { forecast: @forecast } %>
-</div>
+<% content_for :header do %>
+  <%= @date.strftime("%B %d, %Y") %>
+<% end %>
+<div id="report" class="width-100 align-left height-min"></div>
+<div id="daily_report" class="width-100 align-left height-min"></div>

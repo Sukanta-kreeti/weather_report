@@ -1,0 +1,5 @@
+$("#chart-section").html("<%= j render partial: "graph", locals: { forecast: @forecast } %>");
+$("#chart-section").show("slow");
+$('html, body').animate({
+  scrollTop: $("#chart-section").offset().top
+}, 2000);
