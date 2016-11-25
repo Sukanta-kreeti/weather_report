@@ -12,33 +12,72 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap-sprockets
 //= require jquery-ui/datepicker
 //= require Chart.bundle.min
 //= require_tree .
+
+var App = function() {
+  return {
+    blockUI: function (el) {
+      el.block({
+        message: '',
+        css: {
+          backgroundColor: 'none'
+        },
+        overlayCSS: {
+          backgroundColor: '#FFFFFF',
+          backgroundImage: "url('/assets/ajax-loader.gif')",
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          opacity: 0.67
+        }
+      });
+    },
+    unBlockUI: function (el) {
+      el.unblock();
+    }
+  }
+}();
+
 
 $(document).ready(function(){
   var location = null
   getLocation();
 
-  $('.datepicker').datepicker({
-    dateFormat: 'yy-mm-dd',
-    onSelect: function (dateText, inst) {
-      renderData(dateText)
-    }
-  })
+  $(document).on("click", ".weekly-report", function() {
+    App.blockUI($("#chart-section"));
+    var url = $(this).attr("data-href");
+
+    $.ajax({
+      type: "GET",
+      url: url,
+      data: { coords: location.coords },
+      success: function(data) {
+        App.unBlockUI($("#chart-section"));
+        return false;
+      },
+      error: function(data) {
+        App.unBlockUI($("#chart-section"));
+        return false;
+      }
+    });
+  });
 
   function renderData(date) {
-    $("body").addClass("loading");
+    App.blockUI($("#report"));
+
     $.ajax({
       type: "GET",
       url: "/",
       data: { date: date, coords: location.coords },
       success: function(data) {
-        $("body").removeClass("loading");
+        App.unBlockUI($("#report"));
+        renderMonthlyReport()
         return false;
       },
       error: function(data) {
-        $("body").removeClass("loading");
+        App.unBlockUI($("#report"));
         return false;
       }
     })
@@ -49,8 +88,57 @@ $(document).ready(function(){
       navigator.geolocation.getCurrentPosition(showPosition);
     }
   }
+
   function showPosition(position) {
     location = position;
     renderData(new Date().toLocaleString());
   }
+
+  function renderMonthlyReport() {
+    App.blockUI($("#daily_report"));
+
+    $.ajax({
+      type: "GET",
+      url: "/weekly_report",
+      data: { coords: location.coords },
+      success: function(data) {
+        App.unBlockUI($("#daily_report"));
+        return false;
+      },
+      error: function(data) {
+        App.unBlockUI($("#daily_report"));
+        return false;
+      }
+    })
+  }
+
+  $(document).on("click", "#graph_view", function() {
+    if($("#chart-section").css('display') == 'none') {
+      App.blockUI($("#chart-section"));
+      var url = $(this).attr("data-href");
+
+      $.ajax({
+        type: "GET",
+        url: url,
+        data: { coords: location.coords },
+        success: function(data) {
+          App.unBlockUI($("#chart-section"));
+          return false;
+        },
+        error: function(data) {
+          App.unBlockUI($("#chart-section"));
+          return false;
+        }
+      });
+    } else {
+      $("#chart-section").hide("slow");
+      $('html, body').animate({
+        scrollTop: $(document).offset().top
+      }, 2000);
+    }
+  });
+
+  $(document).on("click", "#graph_hide_panel", function() {
+    $("#chart-section").hide("slow");
+  });
 });
