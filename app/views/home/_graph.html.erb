@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading"><%= convert_unix_time_to_date_format(forecast.currently.time) %><a id="graph_hide_panel" href="javascript:void(0)" class="pull-right">Hide</a></div>
   <div class="panel-body">
-    <%= line_chart graph_content(forecast), { :width => "600px", :height => "600px" } %>
+    <%= line_chart graph_content(forecast), graph_option %>
   </div>
 </div>

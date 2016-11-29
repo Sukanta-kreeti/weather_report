@@ -3,7 +3,7 @@
 
   <div class="panel panel-primary text-center no-boder bg-color-blue">
     <div class="panel-body">
-      <i class= '<%= "wi " + weather_icon_class(forecast.currently) + " fa-5x"%>' ></i>
+      <i class= '<%= "wi " + weather_icon_class(forecast.currently.icon) + " fa-5x"%>' ></i>
       <h3><%= forecast.currently.temperature%><sup>o</sup>C </h3>
     </div>
     <div class="panel-footer back-footer-blue">
@@ -12,18 +12,14 @@
   </div>
 </div>
 <div class="col-md-5 col-sm-3 col-xs-6">
-  <div class="text-center">Tomorrow</div>
-  <div>
-    <div class="col-md-6 col-sm-6 col-xs-6 alert alert-info text-center">
-      <i class="fa fa-desktop fa-5x"></i>
-      <h3><%= forecast.daily.data.first.temperatureMin %><sup>o</sup>C </h3>
-      Min.
-    </div>
-    <div class="col-md-6 col-sm-6 col-xs-6 alert alert-info text-center">
-      <i class="fa fa-desktop fa-5x"></i>
-      <h3><%= forecast.daily.data.first.temperatureMax %><sup>o</sup>C </h3>
-      Max.
-    </div>
+  <div class="col-md-12 col-sm-12 col-xs-12 alert alert-info text-center">
+    <ul class="list-group">
+      <li class="list-group-item">Summary: <span class="badge"><%= forecast.currently.summary %></span></li>
+      <li class="list-group-item">Dew: <span class="badge"><%= forecast.currently.dewPoint %><sup>o</sup>C</span></li>
+      <li class="list-group-item">Humidity: <span class="badge"><%= forecast.currently.humidity %>%</span></li>
+      <li class="list-group-item">Wind: <span class="badge"><%= forecast.currently.windSpeed %>km/h</span></li>
+      <li class="list-group-item">Pressure: <span class="badge"><%= forecast.currently.pressure %>p</span></li>
+    </ul>
   </div>
 </div>
 <div class="col-md-4 col-sm-3 col-xs-6">

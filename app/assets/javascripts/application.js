@@ -43,6 +43,9 @@ var App = function() {
 
 $(document).ready(function(){
   var location = null
+  var tz = jstz.determine();
+  document.cookie = 'timezone=' + tz.name() + '; path=/';
+
   getLocation();
 
   $(document).on("click", ".weekly-report", function() {
