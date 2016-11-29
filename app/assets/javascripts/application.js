@@ -27,7 +27,7 @@ var App = function() {
         },
         overlayCSS: {
           backgroundColor: '#FFFFFF',
-          backgroundImage: "url('/assets/ajax-loader.gif')",
+          backgroundImage: "url('assets/ajax-loader.gif')",
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
           opacity: 0.67

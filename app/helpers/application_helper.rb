@@ -15,8 +15,21 @@ module ApplicationHelper
     end
   end
 
-  def weather_icon_class(data)
-    "wi-night-clear"
+  def weather_icon_class(icon)
+    case icon
+    when "fog"
+      "wi-fog"
+    when "partly-cloudy-night"
+      "wi-night-partly-cloudy"
+    when "partly-cloudy-day"
+      "wi-day-cloudy-gusts"
+    when "clear-day"
+      "wi-day-sunny"
+    when "clear-night"
+      "wi-night-clear"
+    else
+      "wi-cloud"
+    end
   end
 
   def convert_unix_time_to_date_format(unix_time)

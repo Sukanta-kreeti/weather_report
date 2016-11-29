@@ -1,5 +1,5 @@
 module HomeHelper
-  def graph_content forecast, title = "Hourly"
+  def graph_content forecast, title = "Temp(C)"
     data = {}
     formated_data = format forecast.hourly.data
     data[:labels] = formated_data.keys.map {|unix_time| Time.at(unix_time).hour}
