@@ -30,7 +30,7 @@ class HomeController < ApplicationController
   private
 
   def setup_date
-    @date = params[:date].present? ? DateTime.parse(params[:date]) : DateTime.now
+    @date = params[:date].present? ? DateTime.parse(params[:date]).in_time_zone(cookies[:timezone]) : DateTime.now.in_time_zone(cookies[:timezone])
   end
 
   def setup_coordinate

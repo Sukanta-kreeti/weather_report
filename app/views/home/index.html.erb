@@ -1,5 +1,5 @@
 <% content_for :header do %>
-  <%= @date.strftime("%B %d, %Y") %>
+  <%= @date.strftime("%B %d, %Y") + "(#{cookies[:timezone]})" %>
 <% end %>
 <div id="report" class="width-100 align-left height-min"></div>
 <div id="daily_report" class="width-100 align-left height-min"></div>
